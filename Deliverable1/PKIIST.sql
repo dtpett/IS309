@@ -1,3 +1,19 @@
+drop table "UIAALUMNI"."CHECKOUT" cascade constraints PURGE;
+drop table "UIAALUMNI"."CROWDFUNDING" cascade constraints PURGE;
+drop table "UIAALUMNI"."DONATION" cascade constraints PURGE;
+drop table "UIAALUMNI"."DONATION_CART" cascade constraints PURGE;
+drop table "UIAALUMNI"."FOCUSAREA" cascade constraints PURGE;
+drop table "UIAALUMNI"."FOCUSLINE" cascade constraints PURGE;
+drop table "UIAALUMNI"."LINEITEM" cascade constraints PURGE;
+drop table "UIAALUMNI"."POSTALAREA" cascade constraints PURGE;
+drop table "UIAALUMNI"."PROJECT" cascade constraints PURGE;
+drop table "UIAALUMNI"."PROJECTLINE" cascade constraints PURGE;
+drop table "UIAALUMNI"."PROJECTTYPE" cascade constraints PURGE;
+drop table "UIAALUMNI"."TABLE1" cascade constraints PURGE;
+drop table "UIAALUMNI"."URL" cascade constraints PURGE;
+drop table "UIAALUMNI"."ADRESS" cascade constraints PURGE;
+drop table "UIAALUMNI"."ACCOUNT" cascade constraints PURGE;
+
 CREATE TABLE ACCOUNT (
 userid                INTEGER NOT NULL,
 firstname             VARCHAR2(30),
@@ -242,7 +258,7 @@ INSERT INTO postalarea
 values (1, 4630, 'Kristiansand');
 
 INSERT INTO postalarea
-values (2, 4640, 'Søgne');
+values (2, 4640, 'SÂ¯gne');
 
 INSERT INTO postalarea
 values (3, 4650, 'Mandal');
@@ -255,7 +271,7 @@ VALUES (1, 'Kaserneveien 30', 'its in kristiansand', 'vest agder', 1);
 
 
 INSERT INTO adress
-VALUES (6, 'Krogan 37', 'its in søgne', 'vest agder', 2);
+VALUES (6, 'Krogan 37', 'its in sÂ¯gne', 'vest agder', 2);
 
 
 
@@ -324,12 +340,7 @@ VALUES (1, 'you will donate', 1, 'donating to project', 1);
 
 
 
+/** With this insert example, you can see it is not possible to donate twice to the same project, you simply have to just increase the amount. **/
 
-
-
-
-
-
-
-
-
+INSERT INTO donation
+VALUES (1, 'you will donate', 2, 'donating to project', 1);
