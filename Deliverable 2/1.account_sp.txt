@@ -1,0 +1,65 @@
+create or replace procedure CREATE_ACCOUNT_SP (
+p_account_id      OUT INTEGER,
+p_email           IN VARCHAR,
+p_password        IN VARCHAR,
+p_location_name   IN VARCHAR,
+p_account_type    IN VARCHAR,
+p_first_name      IN VARCHAR,
+p_last_name       IN  VARCHAR
+)
+
+IS
+p_count number (10);
+ex_error exception;
+err_msg_txt varchar(100) :=null;
+
+BEGIN
+
+select count (*)
+into p_count 
+from I_ACCOUNT
+where p_email = account_email;
+
+if p_count > 0 
+then 
+err_msg_txt := 'The email already exists, try another one ';
+raise ex_error;
+elsif p_email is null then
+err_msg_txt := 'the email  must not be null.';
+raise ex_error;
+elsif  p_password is null then
+err_msg_txt := 'The password must not be null.';
+raise ex_error;
+elsif p_account_type is null then 
+err_msg_txt := 'The account type cannot be null.';
+raise ex_error;
+elsif p_account_type not in ('Individual', 'Organization or Group') then 
+err_msg_txt := ' The account type must be one of these "group or organization"  or "individual." ';
+raise ex_error;
+end if;
+
+
+INSERT INTO I_ACCOUNT ( ACCOUNT_ID,ACCOUNT_EMAIL,ACCOUNT_PASSWORD,ACCOUNT_LOCATION_NAME,ACCOUNT_TYPE,ACCOUNT_FIRST_NAME,ACCOUNT_LAST_NAME ) VALUES (
+    Account_sequences.nextval, 
+    p_email,
+    p_password,
+    p_location_name,
+    p_account_type,
+    p_first_name,
+    p_last_name
+
+    );
+
+COMMIT;
+
+
+    Exception
+    when ex_error then
+    dbms_output.put_line(err_msg_txt);
+    rollback;
+    when others then
+    dbms_output.put_line(' the error code is: ' || sqlcode);
+    dbms_output.put_line(' the error msg is: ' || sqlerrm);
+    rollback;
+
+END;

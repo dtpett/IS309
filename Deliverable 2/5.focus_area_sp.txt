@@ -1,0 +1,50 @@
+create or replace procedure ADD_FOCUSAREA_SP (
+p_project_ID            IN INTEGER,
+p_focusArea             IN VARCHAR
+)
+is
+ex_error    EXCEPTION;
+err_msg_txt VARCHAR(100) := NULL;
+count_ID number;
+count_Area number;
+begin
+
+if p_project_ID  is null then
+err_msg_txt := 'the project id is null and it cannot be null';
+Raise ex_error;
+
+select count (PROJECT_ID) into count_ID
+from I_PROJECT
+where PROJECT_ID = p_project_ID ;
+elsif count_ID < 1 then
+err_msg_txt := ' the project id does not exists';
+Raise ex_error;
+
+end if;
+
+
+if p_focusArea is null then
+err_msg_txt := 'the focusArea is null and it cannot be null';
+Raise ex_error;
+
+select count (FOCUS_AREA_NAME) into count_Area
+from I_PROJ_FOCUSAREA
+where FOCUS_AREA_NAME = p_focusArea;
+elsif count_Area < 1-10 then
+err_msg_txt := ' the FocusArea does not exists';
+Raise ex_error;
+
+end if;
+
+Commit;
+
+Exception
+    when ex_error then
+    dbms_output.put_line(err_msg_txt);
+    rollback;
+    when others then
+    dbms_output.put_line(' the error code is: ' || sqlcode);
+    dbms_output.put_line(' the error msg is: ' || sqlerrm);
+    rollback;
+
+end;

@@ -1,0 +1,46 @@
+create or replace procedure ADD_BUDGET_ITEM_SP (
+p_projectID             IN INTEGER,
+p_description           IN VARCHAR,   
+p_budgetAmt             IN NUMBER
+)
+IS
+ex_error exception;
+err_msg_txt varchar(100) :=null;
+    ID_check NUMBER;
+  i_count number;
+
+
+BEGIN
+    SELECT count(*)
+        INTO ID_check
+        FROM I_BUDGET
+    WHERE PROJECT_ID = p_projectID;
+
+   SELECT count(*)
+     INTO i_count
+     FROM I_BUDGET
+    WHERE BUDGET_LINE_ITEM_DESCRIPTION = p_description;
+
+    IF ID_check = 0
+        THEN
+       err_msg_txt := 'The project ID does not exists yet, please use an existing project ID ';
+         raise ex_error;
+elsif p_description is null then
+err_msg_txt := 'the description must not be null.';
+raise ex_error;
+      ELSIF i_count = 1 
+        THEN
+      err_msg_txt := 'The description already exists';
+      raise ex_error;
+      
+   END IF;
+
+  Exception
+    when ex_error then
+    dbms_output.put_line(err_msg_txt);
+    rollback;
+    when others then
+    dbms_output.put_line(' the error code is: ' || sqlcode);
+    dbms_output.put_line(' the error msg is: ' || sqlerrm);
+    rollback;
+END;

@@ -1,0 +1,57 @@
+create or replace procedure project_type_sp(
+p_project_ID            IN INTEGER,
+p_project_Type              IN VARCHAR
+)
+
+
+
+is
+
+ex_error    EXCEPTION;
+err_msg_txt VARCHAR(100) := NULL;
+count_ID number;
+count_Type number;
+
+
+
+begin
+
+if p_project_id is null then
+err_msg_txt := 'the project id is null and it cannot be null';
+Raise ex_error;
+
+select count (project_id) into count_id 
+from I_project 
+where project_id = p_project_id;
+elsif count_id < 1 then 
+err_msg_txt := ' the project id does not exists';
+Raise ex_error;
+
+end if;
+
+
+if p_project_Type is null then 
+err_msg_txt := 'the project type is null and it cannot be null';
+Raise ex_error;
+
+select count (project_type_name) into count_type
+from I_PROJECT_TYPE
+where project_type_name = p_project_type;
+elsif count_type < 1 then
+err_msg_txt := ' the project type does not exists';
+Raise ex_error;
+
+end if;
+
+Commit;
+
+Exception
+    when ex_error then
+    dbms_output.put_line(err_msg_txt);
+    rollback;
+    when others then
+    dbms_output.put_line(' the error code is: ' || sqlcode);
+    dbms_output.put_line(' the error msg is: ' || sqlerrm);
+    rollback;
+
+end;

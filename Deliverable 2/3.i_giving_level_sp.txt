@@ -1,0 +1,67 @@
+create or replace procedure CREATE_GIVING_LEVEL_SP (
+p_projectID             IN INTEGER,
+p_givingLevelAmt        IN INTEGER,   -- Must be > zero or NULL
+p_givingDescription     IN VARCHAR     -- Must not be NULL
+)
+
+
+IS
+p_check number (10);
+ex_error exception;
+err_msg_txt varchar(100) :=null;
+ID_check number;
+lv_giving_level_amount  I_GIVING_LEVEL.GIVING_LEVEL_AMOUNT%type;
+
+BEGIN
+   SELECT count (*)
+        INTO ID_check
+        FROM I_PROJECT
+            WHERE PROJECT_ID = p_projectID;
+            
+    
+
+if ID_check = 0
+    then
+   err_msg_txt := 'The project ID does not exists yet, please use an existing project ID ';
+   raise ex_error;
+elsif p_check < 0
+then
+err_msg_txt := 'The Donation can not be a zero ';
+raise ex_error;
+
+elsif p_givingDescription is null then
+err_msg_txt := 'the description must not be null.';
+raise ex_error;
+end if;
+select giving_level_amount into lv_giving_level_amount from I_giving_level where giving_level_amount = p_givingLevelAmt;
+
+if p_givingLevelAmt = lv_giving_level_amount 
+    THEN UPDATE I_GIVING_LEVEL
+        SET  GIVING_LEVEL_DESCRIPTION = p_givingDescription 
+            where GIVING_LEVEL_AMOUNT = p_givingLevelAmt;
+            COMMIT;
+elsif p_givingLevelAmt != lv_giving_level_amount then
+INSERT INTO I_GIVING_LEVEL ( PROJECT_ID, GIVING_LEVEL_AMOUNT, GIVING_LEVEL_DESCRIPTION ) VALUES (
+    p_projectID,
+    p_givingLevelAmt,
+    p_givingDescription
+);
+commit;
+end if;
+
+
+
+
+
+
+    Exception
+    when ex_error then
+    dbms_output.put_line(err_msg_txt);
+    rollback;
+    when others then
+    dbms_output.put_line(' the error code is: ' || sqlcode);
+    dbms_output.put_line(' the error msg is: ' || sqlerrm);
+    rollback;
+
+
+END;
