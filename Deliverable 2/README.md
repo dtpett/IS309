@@ -4,7 +4,7 @@ Eirik had the responsibility of finishing at least i_giving_level_sp, and that p
 
 Shiwan took the i_account procedure and finished it in time and the procedure was to our satisfactory.
 
-Daniel: du skal fylle dette.
+Daniel: I was supposed to do i_donation procedure, but due to personal crises I have not completed the work (my grandfather died last saturday, and the funeral was on friday). The group was aware of that and decided to complete the tasks they had assigned, and gave me the break I needed. 
 
 The other procedures were done in group and lab meetings. Everything has been gone through several times and checked by martin to confirm things are the way they are supposed to be.
 To summarize the group work is going very well, we would like to continue this way so that everyone understands how advanced databases works.
