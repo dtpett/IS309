@@ -46,7 +46,7 @@ This one has numeric values and they are not nullable. Therefore, they do not ex
 ##### I_FOCUS_AREA
 I_FOCUS_AREA has a predefined value of 8 (focus areas). These values come from a SELECT statement to show how many rows are in the table. 
 
-Growth per half year: There is no growth information in the assignment, and the table is static.
+Growth per half year: There is no growth information in the assignment, and the table is static. 
 
 ##### I_GIVING_LEVEL
 Each project has an average of 3 giving levels, which means that we also take the amount of projects (1,479) multiplied by 3 giving levels.
@@ -64,8 +64,10 @@ Growth per half year: As in I_DONATION_DETAIL, there is a growth ratio, where th
 An expansion of 5 bytes is also used here, simply because the table contains one attribute that could grow up to 50 characters, so expansion is possible, but less likely.
 
 ##### I_PROJ_PROJTYPE
+There is an average of 1.3 project types per project. Therefore I_PROJ_PROJTYPE = I_PROJECT * 1.3.
+1,479 * 1.3 = 1,923
 
-
+Growth per half year: like in I_FOCUS_AREA, I_GIVING_LEVEL and I_DONATION_DETAIL, we take the growth of I_PROJECT multiplied by 1.3. 225 * 1.3 = 292.5 (where 1.3 is equal to the average number of project types).
 
 ##### I_PROJECT
 We find the number of rows in I_PROJECT based on the information given in Assignment 4. There are, however, 267 active projects, but these projects are included in the total amount of projects given (1,479).
@@ -73,17 +75,14 @@ We find the number of rows in I_PROJECT based on the information given in Assign
 Growth per half year: There is an average of 450 new projects per year, so growht per half year is half the amount (225). 
 
 ##### I_PROJECT_TYPE
-There is an average of 1.3 project types per project. Therefore I_PROJECT_TYPE = I_PROJECT * 1.3.
-1,479 * 1.3 = 1,923
-
-Growth per half year: like in I_FOCUS_AREA, I_GIVING_LEVEL and I_DONATION_DETAIL, we take the growth of I_PROJECT multiplied by 1.3. 225 * 1.3 = 292.5 (where 1.3 is equal to the average number of project types).
+I_PROJECT_TYPE has a predefined value of 10 (project types). These values come from a SELECT statement to show how many rows are in the table. 
 
 PROJECT_TYPE is static, so it is not necessary to have expansion or growth. PCTFREE and expansion remain 0. 
 
 ### Task 1G - extent management
-We will use autoallocate and freelist auto for extent management and space management. These do the job for us automatically, and it is not necessary to take into account the possible limitations uniform extent management could give us. 
-
+We started out using autoallocate and freelist auto for extent management and space management. These do the job for us automatically, and it is not necessary to take into account the possible limitations uniform extent management could give us. 
 https://searchoracle.techtarget.com/answer/Understanding-autoallocate-and-segment-space-management 
+However, after further explanation from Peter we switched back to UNIFORM management. This lets us avoid the problem of new datafiles being created outside of where we decided they should be. 
 
 ## Task 4 - Indexes
 The status of indexes changes from valid to unusable when moving tables into new tablespaces. A portion of the rows that had entries in the index have been moved as part of the partition split operation. The local index has also become unsuable, but only for the indexes of which the partitions where affected by the operation.
@@ -94,13 +93,12 @@ Indexes could need to be rebuilt periodically in scenarios such as:
 - If data is moved to other tablespaces
 
 ## Task 5e
-First of all we did not understand the difference between b and C, but after a while we came to the conclusion that you wanted to us to grant the role to execute some of the procedures and not the whole package. 
+The greatest difficulty is that we could not grant execute priveleges to certain procedures within a package. The syntax is correct.
 
-Another challenge was that we didnt manage to find out how to make a loop for the question C and D. so instead we wrote the grants manually as you can see. 
-Another challenge we had with all of the questions was that we started with making a user instead of just creating roles and granting them what we wanted
-with that being said, our time was not wasted because the next question is about creating users.
-
+## Task 5f
+After several hours of researching we came to the conclusion that in order to accomplish the task was to create other packages with certain procedures included in that package. For example, one of the new packages (DONOR) includes CREATE_ACCOUNT and ADD_DONATION. The user with access to these procedures can ONLY create an account and add donations. 
 
 ## Clarifications and comments:
+We were not able to test users because we could not GRANT (users or roles) CREATE SESSION due to lacking admin privileges. We checked with Martin, and came to the same conclusion. 
 
 Enjoy!
