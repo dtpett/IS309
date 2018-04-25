@@ -22,7 +22,7 @@ Growth per half year: I_BILLING grows half the amount of amount of donations. Th
 ##### I_BUDGET
 I_BUDGET corresponds to amount of projects (I_PROJECT). Each project has one budget. This amounts to 1,479 rows which is equal to I_PROJECT.
 
-I_BUDGET could probably have an increase (albeit, a very small one). Therefore, a 5 PCTFREE is used.
+I_BUDGET is a static table, where we assess the that table will most likely not expand or grow. PCTFREE is 0 and expansion is 0.
 
 Growth per half year: I_BUDGET has the same growth as I_PROJECT (225). 
 
@@ -44,13 +44,9 @@ Growth per half year: I_DONATION_DETAIL grows 1.5 times more than I_DONATION. I_
 This one has numeric values and they are not nullable. Therefore, they do not expand.
 
 ##### I_FOCUS_AREA
-Again, the same ratio is used here as in I_DONATION_DETAIL. The number of focus areas is equal to the number of projects multiplied by an average of 1.5 focus areas for project.
+I_FOCUS_AREA has a predefined value of 8 (focus areas). These values come from a SELECT statement to show how many rows are in the table. 
 
-I_FOCUS_AREA = I_PROJECT * 1.5 = 1,479 * 1.5 = 2,219.
-
-Growth per half year: As in I_DONATION_DETAIL, there is a growth ratio, where the growth of I_DONATION is multiplied by 1.5. 225 * 1.5
-
-An expansion of 5 bytes is also used here, simply because the table contains one attribute that could grow up to 50 characters, so expansion is possible, but less likely.
+Growth per half year: There is no growth information in the assignment, and the table is static.
 
 ##### I_GIVING_LEVEL
 Each project has an average of 3 giving levels, which means that we also take the amount of projects (1,479) multiplied by 3 giving levels.
@@ -58,12 +54,18 @@ I_GIVING_LEVEL = I_PROJECT * 3 = 1,479 * 3 = 4,437
 
 Growth per half year: Same as in I_FOCUS_AREA and I_DONATION_DETAIL. 225 * 3 = 675 (where 3 is the average number of giving levels).
 
-##### I_PROJ_FOCUSAREA and I_PROJ_PROJTYPE
-These tables are composite keys, so they are a combination of the amount of rows in I_PROJECT + I_FOCUSAREA (I_PROJ_FOCUSAREA) and I_PROJECT + I_PROJECT_TYPE (I_PROJ_PROJTYPE). 
-I_PROJ_FOCUSAREA = I_PROJECT + I_FOCUSAREA = 1,479 + 2,219 = 3,698
-I_PROJ_PROJTYPE = + I_PROJECT + I_PROJECT_TYPE = 1,479 + 1,923 = 3,402
+##### I_PROJ_FOCUSAREA
+Again, the same ratio is used here as in I_DONATION_DETAIL. The number of focus areas is equal to the number of projects multiplied by an average of 1.5 focus areas for project.
 
-Growth per half year: We are unsure as to how to calculate this value. Feedback greatly appreciated.
+I_PROJ_FOCUSAREA = I_PROJECT * 1.5 = 1,479 * 1.5 = 2,219.
+
+Growth per half year: As in I_DONATION_DETAIL, there is a growth ratio, where the growth of I_DONATION is multiplied by 1.5. 225 * 1.5
+
+An expansion of 5 bytes is also used here, simply because the table contains one attribute that could grow up to 50 characters, so expansion is possible, but less likely.
+
+##### I_PROJ_PROJTYPE
+
+
 
 ##### I_PROJECT
 We find the number of rows in I_PROJECT based on the information given in Assignment 4. There are, however, 267 active projects, but these projects are included in the total amount of projects given (1,479).
@@ -75,6 +77,8 @@ There is an average of 1.3 project types per project. Therefore I_PROJECT_TYPE =
 1,479 * 1.3 = 1,923
 
 Growth per half year: like in I_FOCUS_AREA, I_GIVING_LEVEL and I_DONATION_DETAIL, we take the growth of I_PROJECT multiplied by 1.3. 225 * 1.3 = 292.5 (where 1.3 is equal to the average number of project types).
+
+PROJECT_TYPE is static, so it is not necessary to have expansion or growth. PCTFREE and expansion remain 0. 
 
 ### Task 1G - extent management
 We will use autoallocate and freelist auto for extent management and space management. These do the job for us automatically, and it is not necessary to take into account the possible limitations uniform extent management could give us. 
