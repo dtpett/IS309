@@ -1,9 +1,4 @@
-SELECT * FROM USER_INDEXES;
-ALTER INDEX WEBSITE_PK REBUILD
-TABLESPACE INDX;
-
-/*Tablespace for UIAALUMNI01*/
-
+/*Tablespace for UIAALUMNI */
 CREATE TABLESPACE UIAALUMNI4M ONLINE
 datafile autoextend on
 extent management local uniform size 4m
