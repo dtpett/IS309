@@ -89,6 +89,14 @@ Indexes could need to be rebuilt periodically in scenarios such as:
 - If the database gets corrupted
 - If data is moved to other tablespaces
 
+## Task 5e
+First of all we did not understand the difference between b and C, but after a while we came to the conclusion that you wanted to us to grant the role to execute some of the procedures and not the whole package. 
+
+Another challenge was that we didnt manage to find out how to make a loop for the question C and D. so instead we wrote the grants manually as you can see. 
+Another challenge we had with all of the questions was that we started with making a user instead of just creating roles and granting them what we wanted
+with that being said, our time was not wasted because the next question is about creating users.
+
+
 ## Clarifications and comments:
 
 Enjoy!
