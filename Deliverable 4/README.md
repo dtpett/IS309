@@ -29,17 +29,17 @@ Growth per half year: I_BUDGET has the same growth as I_PROJECT (225).
 On the NEXT EXTENT we use the minimum. 
 
 ##### I_DONATION
-I_DONATION takes the amount of projects (I_PROJECT) multiplied by 71. 71 is the average amount of donations per project.
+I_DONATION takes the amount of rows in I_DONATION_DETAIL mulitplied by 1.5 (ratio defined in assignment) = 9479
 
-Growth per half year: Donations has an interesting formula for growth per half year. (Active Donations * Average growth per year) / 2.
+Growth per half year: amount of active projects * average donation per project / 2.
+(267*71)/2
 
 An expansion of 5 bytes should be enough based on the datatypes in the table. Most are either a "fixed" size by being either yes or no, and some are not nullable. There are only two attributes that can be expanded, so 5 bytes should be enough.
 
 ##### I_DONATION_DETAIL
-I_DONATION_DETAIL takes the amount of donations multiplied by 1.5, which comes from the 1:1.5 ratio described 
-in the task.
+I_DONATION_DETAIL takes the amount of projects multiplied by 71.
 
-Growth per half year: I_DONATION_DETAIL grows 1.5 times more than I_DONATION. I_DONATION * 1.5 = Growth per half year. 9479 * 1.5 = 14,217.75
+Growth per half year: I_DONATION_DETAIL grows 1.5 times more than I_DONATION. I_DONATION * 1.5 = Growth per half year. 9479 * 1.5 = 14,218
 
 This one has numeric values and they are not nullable. Therefore, they do not expand.
 
